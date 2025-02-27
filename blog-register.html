@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="blog-register.css"> 
+    <!-- Для использования иконок, подключим библиотеку Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <section>
+        <form id="login-form">
+            <h1>Login</h1>
+            <div class="inputbox">
+                <ion-icon name="mail-outline"></ion-icon>
+                <input type="email" id="email" required>
+                <label for="">User</label>
+            </div>
+            <div class="inputbox">
+                <input type="password" id="password" required>
+                <label for="">Password</label>
+                <!-- Иконка для глаза -->
+                <ion-icon id="eye-icon" name="eye-outline" onclick="togglePassword()"></ion-icon>
+            </div>
+            <div class="forget">
+                <label for=""><input type="checkbox" class="btn-chekbox" id="remember">Remember</label>
+                <a href="#">Forgot Password</a>
+            </div>
+            <button type="submit">Login</button>
+            <div class="register">
+                <p>I don't have an account? <a href="/login-register/login.html"> <br> Register</a></p>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        // Когда страница загружается, проверяем, есть ли email в localStorage
+        window.onload = function() {
+            const savedEmail = localStorage.getItem('email');
+            if (savedEmail) {
+                document.getElementById('email').value = savedEmail; // Автозаполнение поля email
+                document.getElementById('remember').checked = true; // Отметка флажка "Запомнить меня"
+            }
+        };
+
+        // Обработчик для показа и скрытия пароля
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            // Если тип пароля "password", меняем на "text" и показываем иконку с открытым глазом
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.name = "eye-off-outline"; // Изменение иконки
+            } else {
+                passwordField.type = "password";
+                eyeIcon.name = "eye-outline"; // Восстановление иконки
+            }
+        }
+
+        // Обработчик для отправки формы
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+
+            // Простейшая валидация (в реальном проекте запрос на сервер)
+            if (email === "" || password === "") {
+                alert("Please enter both email and password.");
+                return;
+            }
+
+            // Имитация успешного логина
+            if (email === "user@example.com" && password === "password123") {
+                alert("Login successful!");
+
+                // Сохранение email, если выбрано "Запомнить меня"
+                if (remember) {
+                    localStorage.setItem('email', email); // Сохраняем email в localStorage
+                } else {
+                    localStorage.removeItem('email'); // Убираем email из localStorage
+                }
+
+                // Перенаправление на страницу после успешного логина
+                window.location.href = "/blog project/html/blog.html";
+            } else {
+                alert("Неправильный пароль или @mail");
+            }
+        });
+    </script>
+</body>
+</html>

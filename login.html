@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="login.css"> 
+    <!-- Для использования иконок, подключим библиотеку Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <section>
+        <form id="register-form">
+            <h1>Register</h1>
+
+            <!-- Поле для ввода email -->
+            <div class="inputbox">
+                <ion-icon name="mail-outline"></ion-icon>
+                <input type="email" id="email" required>
+                <label for="">Email</label>
+            </div>
+
+            <!-- Поле для ввода пароля -->
+            <div class="inputbox">
+                <input type="password" id="password" required>
+                <label for="">Password</label>
+                <!-- Иконка для глазика -->
+                <ion-icon id="eye-icon" name="eye-outline" onclick="togglePassword('password')"></ion-icon>
+            </div>
+
+            <!-- Поле для подтверждения пароля -->
+            <div class="inputbox">
+                <input type="password" id="confirm-password" required>
+                <label for="">Confirm Password</label>
+                <!-- Иконка для глазика -->
+                <ion-icon id="eye-icon-confirm" name="eye-outline" onclick="togglePassword('confirm-password')"></ion-icon>
+            </div>
+
+            <button type="submit">Register</button>
+
+            <div class="login">
+                <p>Already have an account? <a class="register-a" href="/html/blog-register.html"> <br>Login</a></p>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        // Функция для отображения/скрытия пароля
+        function togglePassword(id) {
+            const passwordField = document.getElementById(id);
+            const eyeIcon = id === 'password' ? document.getElementById('eye-icon') : document.getElementById('eye-icon-confirm');
+            
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.name = "eye-off-outline"; // Изменяем иконку
+            } else {
+                passwordField.type = "password";
+                eyeIcon.name = "eye-outline"; // Восстанавливаем иконку
+            }
+        }
+
+        // Обработчик отправки формы
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Проверка на пустые поля
+            if (email === "" || password === "" || confirmPassword === "") {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Проверка на совпадение паролей
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+            // Сохранение данных в localStorage (для примера)
+            // В реальной системе нужно отправить данные на сервер
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+
+            alert("Registration successful!");
+            window.location.href = "/html/blog.html"; // Перенаправление на страницу после успешной регистрации
+        });
+    </script>
+</body>
+</html>
